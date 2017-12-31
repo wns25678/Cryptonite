@@ -3,7 +3,9 @@ package Client;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -35,6 +37,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
@@ -47,6 +50,7 @@ public class Client_USB_Mount extends JFrame{
 	
 	private JLabel _background;
 
+	private JLabel _select;
 	private Font font = new Font ("SansSerif", Font.BOLD,20);
 	
 	private  JList _list;
@@ -80,7 +84,7 @@ public class Client_USB_Mount extends JFrame{
 		
 		getContentPane().setBackground(Color.WHITE);
 		setTitle("Cryptonite");
-		setBounds(500, 300, 410, 290);
+		setBounds(500, 300, 405, 252);	//405, 259
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -91,10 +95,16 @@ public class Client_USB_Mount extends JFrame{
         _layeredPane.setLayout(null);
         
 	    _list = new JList();
-		_list.setBounds(20, 20, 170, 130);
+		_list.setBounds(20, 30, 170, 130);
 		_list.setVisible(true);
 		
+		_select = new JLabel();
+		_select.setText("보호된 USB 선택");
+		_select.setBounds(20, 10, 170, 20);
+		_select.setVisible(true);
+		
 		_layeredPane.add(_list);
+		_layeredPane.add(_select);
         
         
         try {
@@ -105,6 +115,15 @@ public class Client_USB_Mount extends JFrame{
             System.exit(0);
         }
 		
+		try {
+			Toolkit tk = Toolkit.getDefaultToolkit();
+			Image image = tk.getImage("gui/logo.png");
+			this.setIconImage(image);
+		} catch (Exception e) {
+			System.out.println("Appilcation icon not found");
+		}
+		
+        
 		 MyPanel panel = new MyPanel();
 	     panel.setBounds(0, 0, 400, 224);
 		
@@ -250,8 +269,8 @@ public class Client_USB_Mount extends JFrame{
 		bg.add(rdbtnGB);
 		rdbtnMB.setSelected(true);
 	    
-	    _pswd = new JTextField();
-	    _pswd.setBounds(265, 100, 120, 31);
+	    _pswd = new JPasswordField();
+	    _pswd.setBounds(265, 70, 120, 31);
 	    _pswd.setOpaque(true);
 	    _pswd.setForeground(Color.BLACK);
 	    _pswd.setFont(font);
@@ -271,7 +290,7 @@ public class Client_USB_Mount extends JFrame{
 	    //_layeredPane.add(_sizelabel);
 	    
 	    _pswdlabel= new JLabel("PW : ");
-	    _pswdlabel.setBounds(210, 100, 35, 20);
+	    _pswdlabel.setBounds(210, 70, 35, 20);
 	    
 	    _layeredPane.add(_pswdlabel);
 	    /*

@@ -41,6 +41,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -111,8 +112,7 @@ public class Client_Group_Main extends JFrame implements PacketRule
 			else 		 { isClick = true;  }
 		}
 		public String noExtensionName() { 
-			if(!fileName.endsWith(".cnmc")){
-//				System.out.println("fileName : "+fileName+"/n");
+			if(fileName.endsWith(".cnec")){
 				StringTokenizer st2 = new StringTokenizer(fileName, "#");
 				String filename = "";
 				keynum = Integer.parseInt(st2.nextToken());
@@ -120,10 +120,10 @@ public class Client_Group_Main extends JFrame implements PacketRule
 				{
 					filename = filename + st2.nextToken() + "#";
 				}
-				filename.substring(0, filename.length()-1);			//마지막 # 떼어냄
-				fileName=filename;
+				filename = filename.substring(0, filename.length()-1);			//마지막 # 떼어냄
+				return filename.substring(0,filename.length() - 5);
 			}
-//			System.out.println("filename2222222 : "+fileName+"/n");
+
 			
 			return fileName.substring(0, fileName.length() - 5); 
 		}
@@ -380,7 +380,9 @@ public class Client_Group_Main extends JFrame implements PacketRule
 		JButton btn = null;
 		if(_btnList.get(index).button!=null) {return;}
 		if (_btnList.get(index).Extension().equals(".cnmc"))
+		{
 			btn = new JButton(_btnList.get(index).fileName, new ImageIcon("gui/file_cnmc.png"));
+		}
 		else
 		{
 			String filename= _btnList.get(index).fileName;
@@ -509,7 +511,7 @@ public class Client_Group_Main extends JFrame implements PacketRule
 								 
 								 if (password == null)
 								 {
-									 JOptionPane.showMessageDialog(null, _btnList.get(i).fileName + " download canceled!!");
+									 JOptionPane.showMessageDialog(null, _btnList.get(i).fileName + " download canceled!!","Cancel", JOptionPane.OK_OPTION);
 									 continue;
 								 }
 								 
@@ -518,7 +520,6 @@ public class Client_Group_Main extends JFrame implements PacketRule
 								 String sha = SHA(pbk.concat("0000"));
 								 
 								 String filesha = getFileSHA(_btnList.get(i).fullPath);
-								 
 								 if (!sha.equals(filesha))
 								 {
 									 JOptionPane.showMessageDialog(null, _btnList.get(i).fileName+" password incorrect!!", "Error", JOptionPane.OK_OPTION);
@@ -526,6 +527,7 @@ public class Client_Group_Main extends JFrame implements PacketRule
 								 }
 								 
 								 key = new SecretKeySpec(pbk.concat("0000").getBytes(),"AES");
+								 System.out.println(new String(Base64.getEncoder().encode(pbk.concat("0000").getBytes())));
 							 }
 							 else
 							 {
@@ -813,8 +815,13 @@ public class Client_Group_Main extends JFrame implements PacketRule
     }
     
 	private String getPassword(String name) {
-		// TODO 자동 생성된 메소드 스텁
-		return (String) JOptionPane.showInputDialog(null, "Input "+ name + " Password\nWarning!!\nIf you forget your password, you will not be able to decrypt the file.", "Password", JOptionPane.PLAIN_MESSAGE, null, null, null);
+		String password = null;
+		JPasswordField passwordField = new JPasswordField();
+		Object[] obj = {"Input "+ name + " Password",passwordField};
+		if (JOptionPane.showOptionDialog(null, obj, "Password", JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE, null, null, null) == JOptionPane.YES_OPTION) {
+			password = new String(passwordField.getPassword());
+		}
+		return password;
 	}
 	
 	private String getPBK (String password, int gpCode)

@@ -25,24 +25,24 @@
         android:layout_marginBottom="20dp">
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type Your OTP : "
-            android:id="@+id/textView"
-            android:textSize="24dp"
-            android:textStyle="bold"
+            android:layout_marginRight="10dp"
+            android:text="Number : "
             android:textColor="#02aeef"
-            android:layout_marginRight="10dp" />
+            android:textSize="24dp"
+            android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/OTP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:ems="10"
-            android:id="@+id/OTP"
-            android:hint="OTP"
-            android:maxLines="1"
-            android:maxLength="6" />
+            android:hint="Number"
+            android:inputType="number"
+            android:maxLength="6"
+            android:maxLines="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,30 +83,31 @@
         android:visibility="gone" />
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/receive"
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#00000000"
         android:src="@drawable/filereceive_selector"
-        android:background="#00000000"/>
+        android:visibility="gone" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Downloading...."
         android:id="@+id/Downloading_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="Downloading...."
         android:textColor="#02aeef"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:layout_marginTop="30dp"
         android:visibility="gone" />
 
     <ProgressBar
+        android:id="@+id/Download_progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Download_progressBar"
         android:layout_gravity="center_horizontal"
         android:indeterminate="false"
         android:max="100"
